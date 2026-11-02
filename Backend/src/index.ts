@@ -11,9 +11,19 @@ import authRoutes from "./routes/auth.routes";
 import bookRoutes from "./routes/book.routes";
 import crudRoutes from "./routes/crud.routes";
 
+import logRoutes from "./routes/log.routes";
+
 const app = express();
 const PORT = process.env.PORT || 8080;
 
+// Rutas del sistema
+app.use("/api/auth", authRoutes);
+app.use("/api/books", bookRoutes);
+app.use("/api", crudRoutes);
+app.use("/api/logs", logRoutes);
+
+// Manejador de errores
+app.use(errorHandler);
 // ==========================================
 // 1. MIDDLEWARES GLOBALES (Siempre van PRIMERO)
 // ==========================================

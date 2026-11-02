@@ -7,7 +7,7 @@ import { Genere } from "../entities/genere.entity";
 import { Sage } from "../entities/sage.entity";
 import { Shelf } from "../entities/shelf.entity";
 import { User } from "../entities/user.entity";
-
+import { Log } from "../entities/log.entity";
 dotenv.config();
 
 export const AppDataSource = new DataSource({
@@ -19,5 +19,5 @@ export const AppDataSource = new DataSource({
   database: process.env.DB_NAME || process.env.DB_DATABASE || "biblioteca",
   synchronize: true,
   logging: false,
-  entities: [User, Book, Author, Genere, Sage, Shelf],
+  entities: [User, Book, Author, Genere, Sage, Shelf, Log],
 });

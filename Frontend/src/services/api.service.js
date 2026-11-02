@@ -7,6 +7,12 @@ const api = axios.create({
     timeout: API_CONFIG.TIMEOUT
 });
 
+//servicio para obtener los logs del sistema
+export const LogsService = {
+    getLogs: (params = {}) =>
+        api.get("/logs", { params }).then(res => res.data)
+};
+
 // Interceptor: Inyecta automáticamente el token de LocalStorage en cada petición
 api.interceptors.request.use((config) => {
     const token = localStorage.getItem(STORAGE_KEYS.ADMIN_TOKEN);

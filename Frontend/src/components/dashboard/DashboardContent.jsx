@@ -35,7 +35,6 @@ const tabs = {
         icon: Archive,
     },
 };
-
 export default function DashboardContent({
     activeTab,
     loading,
@@ -54,18 +53,14 @@ export default function DashboardContent({
     onDelete,
 }) {
     const currentTab = tabs[activeTab];
-
     const masterItems = {
         authors,
         generes,
         sages,
         shelves,
     };
-
     const items = masterItems[activeTab] || [];
-
     const Icon = currentTab.icon;
-
     return (
         <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
             <div className="border-b border-slate-100 px-5 py-5 sm:px-7">
@@ -73,12 +68,10 @@ export default function DashboardContent({
                     <div className="rounded-xl bg-indigo-50 p-3 text-indigo-600">
                         <Icon size={22} />
                     </div>
-
                     <div>
                         <h2 className="text-xl font-bold text-slate-900">
                             Gestión de {currentTab.label.toLowerCase()}
                         </h2>
-
                         <p className="mt-1 text-sm text-slate-500">
                             {activeTab === "books"
                                 ? "Registrá, editá y eliminá libros."
@@ -87,7 +80,6 @@ export default function DashboardContent({
                     </div>
                 </div>
             </div>
-
             <div className="space-y-8 p-5 sm:p-7">
                 {loading ? (
                     <div className="flex flex-col items-center justify-center py-16">
@@ -95,7 +87,6 @@ export default function DashboardContent({
                             size={32}
                             className="animate-spin text-indigo-600"
                         />
-
                         <p className="mt-4 text-sm text-slate-500">
                             Cargando información...
                         </p>
@@ -112,7 +103,6 @@ export default function DashboardContent({
                             sages={sages}
                             onCancel={onCancel}
                         />
-
                         <div className="border-t border-slate-100 pt-8">
                             <BookTable
                                 books={books}
@@ -130,7 +120,6 @@ export default function DashboardContent({
                             onSubmit={onMasterSubmit}
                             onCancel={onCancel}
                         />
-
                         <div className="border-t border-slate-100 pt-8">
                             <MasterList
                                 items={items}
