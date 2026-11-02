@@ -56,7 +56,7 @@ class CrudService {
     async createGenere(name) { return this.create(genere_entity_1.Genere, name); }
     async updateGenere(id, name) { return this.update(genere_entity_1.Genere, id, name); }
     async deleteGenere(id) { return this.delete(genere_entity_1.Genere, id); }
-    // Sagas
+    // Sages
     async getSages() { return this.getAll(sage_entity_1.Sage); }
     async createSage(name) { return this.create(sage_entity_1.Sage, name); }
     async updateSage(id, name) { return this.update(sage_entity_1.Sage, id, name); }

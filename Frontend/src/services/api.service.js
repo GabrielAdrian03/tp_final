@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API_CONFIG, STORAGE_KEYS } from "../config/constants.js";
+import { API_CONFIG, STORAGE_KEYS, FRONT_ROUTES } from "../config/constants.js";
 
 // Creación de la instancia unificada de Axios
 const api = axios.create({

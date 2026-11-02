@@ -6,6 +6,7 @@ const router = Router();
 const bookController = new BookController();
 
 //vista publicas solo get
+router.get("/", bookController.getAll);
 router.get("/:id", bookController.getOne);
 
 //rutas privadas que se ven si se valida el token

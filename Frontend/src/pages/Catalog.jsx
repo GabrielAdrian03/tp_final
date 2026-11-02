@@ -1,81 +1,161 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
+
+import CatalogHeader from "../components/CatalogComponent/CatalogHeader";
+import CatalogFilters from "../components/CatalogComponent/CatalogFilters";
+import BookGrid from "../components/CatalogComponent/BookGrid";
+import BookDetailModal from "../components/CatalogComponent/BookDetailModal";
+import LoadingState from "../components/CatalogComponent/LoadingState";
+import EmptyState from "../components/CatalogComponent/EmptyState";
+
+const API_URL = "http://localhost:8080/api";
 
 export default function Catalog() {
-    const [books, setBooks] = useState([]);
-    const [authors, setAuthors] = useState([]);
-    const [genres, setGenres] = useState([]);
-    
-    // Estados de los filtros
-    const [selectedGenre, setSelectedGenre] = useState("");
-    const [selectedAuthor, setSelectedAuthor] = useState("");
-    const [selectedYear, setSelectedYear] = useState("");
-    
-    // Estado para ver el detalle de un libro específico
-    const [selectedBook, setSelectedBook] = useState(null);
+  //usestates para almacenar los datos de libros, autores y géneros
+  const [books, setBooks] = useState([]);
+  const [authors, setAuthors] = useState([]);
+  const [generes, setGeneres] = useState([]);
 
-    // Cargar catálogos iniciales para los filtros desplegables
-    useEffect(() => {
-        fetch("http://localhost:8080/api/authors").then(res => res.json()).then(data => setAuthors(data));
-        fetch("http://localhost:8080/api/genres").then(res => res.json()).then(data => setGenres(data));
-    }, []);
+  //usestates para almacenar los filtros seleccionados por el usuario
+  const [selectedGenere, setSelectedGenere] = useState("");
+  const [selectedAuthor, setSelectedAuthor] = useState("");
+  const [selectedYear, setSelectedYear] = useState("");
 
-    // Cargar y filtrar libros de forma combinada (Efecto reactivo)
-    useEffect(() => {
-        let url = "http://localhost:8080/api/books?";
-        if (selectedGenre) url += `genreId=${selectedGenre}&`;
-        if (selectedAuthor) url += `authorId=${selectedAuthor}&`;
-        if (selectedYear) url += `year=${selectedYear}&`;
+  //usestates para almacenar el libro seleccionado para ver detalles
+  const [selectedBook, setSelectedBook] = useState(null);
 
-        fetch(url)
-            .then(res => res.json())
-            .then(data => setBooks(data));
-    }, [selectedGenre, selectedAuthor, selectedYear]);
+  //usestates para manejar el estado de carga y errores
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-    return (
-        <div style={{ padding: "20px" }}>
-            <h2>📚 Catálogo de Libros</h2>
-            
-            {/* BARRA DE FILTROS */}
-            <div style={{ display: "flex", gap: "10px", marginBottom: "20px" }}>
-                <select onChange={e => setSelectedAuthor(e.target.value)}>
-                    <option value="">Todos los Autores</option>
-                    {authors.map(a => <option key={a.id} value={a.id}>{a.name}</option>)}
-                </select>
+  // Cargar autores y géneros
+  useEffect(() => {
+    const loadCatalogs = async () => {
+      try {
+        const [authorsRes, generesRes] = await Promise.all([
+          fetch(`${API_URL}/authors`),
+          fetch(`${API_URL}/generes`),
+        ]);
 
-                <select onChange={e => setSelectedGenre(e.target.value)}>
-                    <option value="">Todos los Géneros</option>
-                    {genres.map(g => <option key={g.id} value={g.id}>{g.name}</option>)}
-                </select>
+        if (!authorsRes.ok || !generesRes.ok) {
+          throw new Error("Error al cargar los catálogos");
+        }
+        // Parsear las respuestas JSON
+        const authorsData = await authorsRes.json();
+        const generesData = await generesRes.json();
 
-                <input type="number" placeholder="Filtrar por Año" value={selectedYear} onChange={e => setSelectedYear(e.target.value)} />
-            </div>
+        // Actualizar los estados con los datos obtenidos
+        setAuthors(authorsData);
+        setGeneres(generesData);
 
-            {/* GRILLA DE LIBROS */}
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "15px" }}>
-                {books.map(book => (
-                    <div key={book.id} style={{ border: "1px solid #ddd", padding: "15px", borderRadius: "5px" }}>
-                        <h3>{book.title}</h3>
-                        <p>Autor: {book.author?.name}</p>
-                        <button onClick={() => setSelectedBook(book)}>Ver Detalle Completo</button>
-                    </div>
-                ))}
-            </div>
+      } catch (err) {
+        setError(err.message);
+      }
+    };
 
-            {/* MODAL: VISUALIZACIÓN DEL DETALLE DE UN LIBRO */}
-            {selectedBook && (
-                <div style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, background: "rgba(0,0,0,0.5)", display: "flex", justifyContent: "center", alignItems: "center" }}>
-                    <div style={{ background: "#fff", padding: "30px", borderRadius: "8px", maxWidth: "500px", width: "100%" }}>
-                        <h2>{selectedBook.title}</h2>
-                        <hr />
-                        <p><strong>Autor:</strong> {selectedBook.author?.name}</p>
-                        <p><strong>Género:</strong> {selectedBook.genre?.name}</p>
-                        <p><strong>Año:</strong> {selectedBook.publicationYear}</p>
-                        <p><strong>📍 UBICACIÓN EN ESTANTE:</strong> {selectedBook.shelf?.name}</p>
-                        {selectedBook.saga && <p><strong>📖 Saga:</strong> {selectedBook.saga?.name}</p>}
-                        <button onClick={() => setSelectedBook(null)} style={{ marginTop: "15px" }}>Cerrar</button>
-                    </div>
-                </div>
-            )}
+    loadCatalogs();
+  }, []);
+
+  // Obtener libros
+  useEffect(() => {
+    const controller = new AbortController();
+
+    const loadBooks = async () => {
+      setLoading(true);
+      setError("");
+
+      try {
+        const params = new URLSearchParams();
+        // Agregar filtros a la URL si están seleccionados
+        if (selectedGenere) params.append("genreId", selectedGenere);
+        if (selectedAuthor) params.append("authorId", selectedAuthor);
+        if (selectedYear) params.append("year", selectedYear);
+        // Realizar la solicitud fetch con los filtros aplicados
+        const response = await fetch(
+          `${API_URL}/books?${params.toString()}`,
+          { signal: controller.signal }
+        );
+
+        if (!response.ok) {
+          throw new Error("Error al cargar los libros");
+        }
+
+        const data = await response.json();
+        setBooks(data);
+
+      } catch (err) {
+        if (err.name !== "AbortError") {
+          setError(err.message);
+          setBooks([]);
+        }
+      } finally {
+        if (!controller.signal.aborted) {
+          setLoading(false);
+        }
+      }
+    };
+    // Llamar a la función para cargar los libros
+    loadBooks();
+    // Limpiar la solicitud fetch si el componente se desmonta
+    return () => controller.abort();
+    //dependencias para recargar los libros cuando cambian los filtros
+  }, [selectedGenere, selectedAuthor, selectedYear]);
+
+  // Limpiar filtros
+  const clearFilters = () => {
+    setSelectedGenere("");
+    setSelectedAuthor("");
+    setSelectedYear("");
+  };
+
+  // Cerrar modal
+  const closeModal = useCallback(() => {
+    setSelectedBook(null);
+  }, []);
+
+  // Determinar si hay filtros aplicados
+  const hasFilters = selectedGenere || selectedAuthor || selectedYear;
+
+  return (
+  <main className="min-h-screen bg-slate-950 px-4 py-8 sm:px-6 lg:px-10">
+    <div className="mx-auto max-w-7xl">
+      <CatalogHeader totalBooks={books.length} />
+      <CatalogFilters
+        authors={authors}
+        generes={generes}
+        selectedAuthor={selectedAuthor}
+        selectedGenere={selectedGenere}
+        selectedYear={selectedYear}
+        setSelectedAuthor={setSelectedAuthor}
+        setSelectedGenere={setSelectedGenere}
+        setSelectedYear={setSelectedYear}
+        onClear={clearFilters}
+      />
+
+      {error ? (
+        <div className="rounded-xl border border-red-900/50 bg-red-950/30 p-4 text-sm text-red-400">
+          {"No se encontraron Resultados"}
         </div>
-    );
-}
+
+      ) : loading ? (
+        <LoadingState />
+      ) : books.length === 0 ? (
+        <EmptyState
+          onClear={clearFilters}
+          hasFilters={hasFilters}
+        />
+      ) : (
+        <BookGrid
+          books={books}
+          onViewDetails={setSelectedBook}
+        />
+      )}
+    </div>
+
+    {selectedBook && (
+      <BookDetailModal
+        book={selectedBook}
+        onClose={closeModal}
+      />
+    )}
+  </main>
+)};

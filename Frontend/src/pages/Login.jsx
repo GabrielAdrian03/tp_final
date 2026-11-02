@@ -29,8 +29,9 @@ export default function Login() {
     };
 
     return (
-        <div style={{ maxWidth: "400px", margin: "100px auto", padding: "20px", border: "1px solid #ccc" }}>
-            <h2>Login Administrador</h2>
+        <div style={{ maxWidth: "400px", margin: "100px auto", padding: "20px", border: "1px solid #0c0101" }}>
+            <h2 class="text-3xl font-bold text-black sm:text-4xl">Login Administrador</h2>
+
             <form onSubmit={handleSubmit}>
                 <input type="email" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} required style={{width:"100%", marginBottom:"10px"}} />
                 <input type="password" placeholder="Contraseña" value={password} onChange={e => setPassword(e.target.value)} required style={{width:"100%", marginBottom:"20px"}} />

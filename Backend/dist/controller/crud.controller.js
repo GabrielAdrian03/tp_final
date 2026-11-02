@@ -31,6 +31,7 @@ class CrudController {
                 if (!name)
                     return res.status(400).json({ message: "Complete el nombre" });
                 const item = await method(name);
+                return res.status(201).json({ message: "Registro creado", data: item });
             }
             catch (error) {
                 next(error);

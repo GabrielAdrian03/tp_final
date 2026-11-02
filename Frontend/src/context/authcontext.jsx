@@ -11,9 +11,9 @@ export function AuthProvider({ children }) {
     };
 
     const logout = () => {
-        localStorage.removeItem("admin_token");
+        localStorage.removeItem("admin_token"); //quita el token
         setToken(null);
-        window.location.href = "/login"; // Redirección automática
+        window.location.href = "/login"; //redirige al login
     };
 
     return (

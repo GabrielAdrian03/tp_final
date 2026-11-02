@@ -14,13 +14,13 @@ router.delete("/authors/:id", authenticateJWT, controller.deleteAuthor);
 // ✍️ CRUD GÉNEROS
 router.get("/generes", controller.getGeneres);
 router.post("/generes", authenticateJWT, controller.createGenere);
-router.put("/genres/:id", authenticateJWT, controller.updateGenere);
+router.put("/generes/:id", authenticateJWT, controller.updateGenere);
 router.delete("/generes/:id", authenticateJWT, controller.deleteGenere);
 
-// ✍️ CRUD SAGAS
+// ✍️ CRUD SAGES
 router.get("/sages", controller.getSages);
 router.post("/sages", authenticateJWT, controller.createSage);
-router.put("/sagas/:id", authenticateJWT, controller.updateSage);
+router.put("/sages/:id", authenticateJWT, controller.updateSage);
 router.delete("/sages/:id", authenticateJWT, controller.deleteSage);
 
 // ✍️ CRUD ESTANTES

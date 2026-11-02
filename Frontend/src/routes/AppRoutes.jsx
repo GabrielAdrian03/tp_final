@@ -21,10 +21,10 @@ export default function AppRoutes() {
     return (
         <Routes>
             {/* Rutas Públicas */}
-            <Route path={FRONT_ROUTES.CATALOG} element={<Catalog />} />
             <Route path={FRONT_ROUTES.LOGIN} element={<Login />} />
 
             {/* Rutas Privadas Protegidas */}
+            <Route path={FRONT_ROUTES.CATALOG} element={<Catalog />} />
             <Route path={FRONT_ROUTES.ADMIN} element={
                 <ProtectedRoute>
                     <AdminDashboard />

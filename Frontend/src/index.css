@@ -1,3 +1,94 @@
+@import "tailwindcss";
+
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #121214; /* Fondo oscuro moderno */
+  color: #e1e1e6; /* Texto claro de alta legibilidad */
+  -webkit-font-smoothing: antialiased;
+}
+input, select {
+  background-color: #202024;
+  border: 1px solid #323238;
+  color: #ffffff;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+}
+input:focus, select:focus {
+  border-color: #00adb5; /* Color de realce celeste/cian */
+  outline: none;
+}
+button {
+  background-color: #00adb5;
+  color: #ffffff;
+  border: none;
+  padding: 12px 20px;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+}
+button:hover {
+  background-color: #008891;
+}
+button:active {
+  transform: scale(0.98);
+}
+.book-card, [style*="gridTemplateColumns"] > div {
+  background-color: #202024 !important;
+  border: 1px solid #323238 !important;
+  border-radius: 8px !important;
+  padding: 20px !important;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s, border-color 0.2s;
+}
+.book-card:hover, [style*="gridTemplateColumns"] > div:hover {
+  transform: translateY(-4px);
+  border-color: #00adb5 !important;
+}
+[style*="margin: 100px auto"] {
+  background-color: #202024 !important;
+  border: 1px solid #323238 !important;
+  border-radius: 12px !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5) !important;
+  padding: 30px !important;
+}
+[style*="position: fixed"] {
+  background: rgba(0, 0, 0, 0.8) !important; /* Fondo del modal más oscuro */
+}
+
+[style*="background: rgb(255, 255, 255)"] {
+  background-color: #202024 !important; /* Interior del modal oscuro */
+  border: 1px solid #323238;
+  color: #e1e1e6 !important;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background-color: #202024;
+}
+th {
+  background-color: #323238 !important;
+  color: #00adb5 !important;
+  font-weight: bold;
+  text-align: left;
+  padding: 12px;
+}
+td {
+  padding: 12px;
+  border-bottom: 1px solid #323238;
+}
+tr:hover {
+  background-color: #29292e;
+}
+
 :root {
   --text: #6b6375;
   --text-h: #08060d;
@@ -108,4 +199,12 @@ code {
   line-height: 135%;
   padding: 4px 8px;
   background: var(--code-bg);
+}
+.text-black {
+  color: #000000 !important;
+}
+section.bg-white {
+  background-color: #7573b6 !important;
+  border-color: #e21a24 !important; /* Color gris suave para el borde */
+  border-radius: 1rem !important;    /* Mantiene el diseño redondeado (rounded-2xl) */
 }

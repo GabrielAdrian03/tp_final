@@ -30,7 +30,7 @@ export class Book {
     @JoinColumn({ name: "shelfId" })
     shelf!: Shelf;
 
-    //relaciones con las sagas
+    //relaciones con las sages
     @ManyToOne(() => Sage, (sage) => sage.books, { eager: true, nullable: true, onDelete: "SET NULL" })
     @JoinColumn({ name: "sagaId" })
     sage!: Sage | null;

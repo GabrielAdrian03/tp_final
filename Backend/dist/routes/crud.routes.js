@@ -13,12 +13,12 @@ router.delete("/authors/:id", auth_middleware_1.authenticateJWT, controller.dele
 // ✍️ CRUD GÉNEROS
 router.get("/generes", controller.getGeneres);
 router.post("/generes", auth_middleware_1.authenticateJWT, controller.createGenere);
-router.put("/genres/:id", auth_middleware_1.authenticateJWT, controller.updateGenere);
+router.put("/generes/:id", auth_middleware_1.authenticateJWT, controller.updateGenere);
 router.delete("/generes/:id", auth_middleware_1.authenticateJWT, controller.deleteGenere);
-// ✍️ CRUD SAGAS
+// ✍️ CRUD SAGES
 router.get("/sages", controller.getSages);
 router.post("/sages", auth_middleware_1.authenticateJWT, controller.createSage);
-router.put("/sagas/:id", auth_middleware_1.authenticateJWT, controller.updateSage);
+router.put("/sages/:id", auth_middleware_1.authenticateJWT, controller.updateSage);
 router.delete("/sages/:id", auth_middleware_1.authenticateJWT, controller.deleteSage);
 // ✍️ CRUD ESTANTES
 router.get("/shelves", controller.getShelves);

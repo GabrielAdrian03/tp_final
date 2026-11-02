@@ -63,7 +63,7 @@ export class CrudService {
         async updateGenere(id: number, name: string) { return this.update(Genere, id, name); }
         async deleteGenere(id: number) { return this.delete(Genere, id); }
     
-        // Sagas
+        // Sages
         async getSages() { return this.getAll(Sage); }
         async createSage(name: string) { return this.create(Sage, name); }
         async updateSage(id: number, name: string) { return this.update(Sage, id, name); }
@@ -75,4 +75,3 @@ export class CrudService {
         async updateShelf(id: number, name: string) { return this.update(Shelf, id, name); }
         async deleteShelf(id: number) { return this.delete(Shelf, id); }
 }
-

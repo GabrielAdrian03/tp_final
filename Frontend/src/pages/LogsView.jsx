@@ -5,7 +5,7 @@ export default function LogsView() {
 
     // Simulador o lector de peticiones logger del sistema
     useEffect(() => {
-        // En una app real, puedes exponer un endpoint GET /api/logs protegido por JWT en tu backend
+        //se puede exponer un endpoint GET /api/logs protegido cun un JWT en el backend
         // Aquí mostramos una simulación integrada de eventos del sistema
         setLogs([
             { id: 1, type: "INFO", time: "18:17:41", msg: "conectado a la BD. Puerto: 8080" },
@@ -17,7 +17,7 @@ export default function LogsView() {
 
     return (
         <div style={{ padding: "20px" }}>
-            <h2>📋 Consola de Eventos y Logs de la Aplicación</h2>
+            <h2>Consola de Eventos y Logs de la Aplicación</h2>
             <div style={{ backgroundColor: "#1e1e1e", color: "#fff", padding: "20px", fontFamily: "monospace", borderRadius: "5px", height: "400px", overflowY: "scroll" }}>
                 {logs.map(log => (
                     <div key={log.id} style={{ marginBottom: "10px", color: log.type === "ERROR" ? "#ff6b6b" : log.type === "WARN" ? "#f1c40f" : "#2ecc71" }}>

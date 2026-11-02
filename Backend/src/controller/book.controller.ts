@@ -1,11 +1,31 @@
 import { Request, Response } from "express";
 import { BookService } from "../service/book.service"
-import { error } from "node:console";
 
 //inicializa lo de book.service
 const bookService = new BookService();
 
 export class BookController {
+    async getAll(req: Request, res: Response): Promise<Response> {
+        const parseFilter = (value: unknown): number | undefined | null => {
+            if (value === undefined || value === "") return undefined;
+            if (typeof value !== "string") return null;
+
+            const parsedValue = Number(value);
+            return Number.isInteger(parsedValue) ? parsedValue : null;
+        };
+
+        const genreId = parseFilter(req.query.genreId);
+        const authorId = parseFilter(req.query.authorId);
+        const year = parseFilter(req.query.year);
+
+        if (genreId === null || authorId === null || year === null) {
+            return res.status(400).json({ message: "Los filtros deben ser números enteros válidos." });
+        }
+
+        const books = await bookService.getFilteredBooks(genreId, authorId, year);
+        return res.status(200).json(books);
+    }
+
     //Crud recibir crear un libro
     async create(req: Request, res: Response): Promise<Response> {
         try {const newBook = await bookService.createBook(req.body);
