@@ -50,7 +50,7 @@ export class CrudService {
 
     await repository.remove(exist)
     }
-    //expositores
+    //expositores para que se puedan usar en el controller
         // Autores
         async getAuthors() { return this.getAll(Author); }
         async createAuthor(name: string) { return this.create(Author, name); }

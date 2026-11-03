@@ -78,7 +78,7 @@ export default function BookForm({
                         {editingId ? "Editar libro" : "Registrar libro"}
                     </h3>
 
-                    <p className="text-sm text-slate-500">
+                    <p className="text-sm text-black/70">
                         Completá los datos del libro.
                     </p>
                 </div>

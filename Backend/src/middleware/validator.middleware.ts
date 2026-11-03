@@ -10,7 +10,7 @@ export const validateBookData = (req: Request, res: Response, next: NextFunction
             message: "El título es obligatorio y debe ser un texto válido."
         });
     }
-
+    // Validar el año de publicación
     const year = Number(publicationYear);
     if (isNaN(year) || year < BOOK_CONSTRAINTS.MIN_YEAR || year > BOOK_CONSTRAINTS.MAX_YEAR) {
         return res.status(HTTP_STATUS.BAD_REQUEST).json({
@@ -18,7 +18,7 @@ export const validateBookData = (req: Request, res: Response, next: NextFunction
             message: `El año de publicación debe ser un número entre ${BOOK_CONSTRAINTS.MIN_YEAR} y ${BOOK_CONSTRAINTS.MAX_YEAR}.`
         });
     }
-
+    
     if (!authorId || isNaN(Number(authorId))) {
         return res.status(HTTP_STATUS.BAD_REQUEST).json({ status: "error", message: "Se requiere un ID de autor válido." });
     }

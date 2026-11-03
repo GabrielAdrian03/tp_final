@@ -9,16 +9,20 @@ import DashboardStats from "../components/dashboard/DashboardStats.jsx";
 import DashboardContent from "../components/dashboard/DashboardContent.jsx";
 
 export default function AdminDashboard() {
+    // Estado de la pestaña activa y carga de datos
     const [activeTab, setActiveTab] = useState("books");
+    //loaderror es para mostrar errores de carga de datos
     const [loadError, setLoadError] = useState("");
+    //loading es para mostrar un spinner mientras se cargan los datos
     const [loading, setLoading] = useState(true);
 
+    // Datos de libros y registros maestros
     const [books, setBooks] = useState([]);
     const [authors, setAuthors] = useState([]);
     const [generes, setGeneres] = useState([]);
     const [sages, setSages] = useState([]);
     const [shelves, setShelves] = useState([]);
-
+    //editingId es para saber si se está editando un libro o registro maestro
     const [editingId, setEditingId] = useState(null);
     const [selectedItemData, setSelectedItemData] = useState(null);
 

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useAuth } from "../context/authcontext.jsx";
+import { useAuth } from "../context/AuthContext.jsx";
 
 export default function Navbar() {
     const { token, logout } = useAuth();
@@ -13,7 +13,8 @@ export default function Navbar() {
             </div>
             <div>
                 {token ? (
-                    <button onClick={logout} style={{ backgroundColor: "#e74c3c", color: "white", border: "none", padding: "5px 10px", cursor: "pointer" }}>
+                    <button onClick={logout} 
+                    style={{ backgroundColor: "#e74c3c", color: "white", border: "none", padding: "5px 10px", cursor: "pointer" }}>
                         🚪 Cierre de Sesión
                     </button>
                 ) : (

@@ -26,7 +26,7 @@ export class BookController {
         return res.status(200).json(books);
     }
 
-    //Crud recibir crear un libro
+    //Crud crear 1 libro
     async create(req: Request, res: Response): Promise<Response> {
         try {const newBook = await bookService.createBook(req.body);
             return res.status(201).json({ message: "Libro registrado", book: newBook });

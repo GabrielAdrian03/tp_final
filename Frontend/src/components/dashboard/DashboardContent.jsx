@@ -72,7 +72,7 @@ export default function DashboardContent({
                         <h2 className="text-xl font-bold text-slate-900">
                             Gestión de {currentTab.label.toLowerCase()}
                         </h2>
-                        <p className="mt-1 text-sm text-slate-500">
+                        <p className="mt-1 text-sm text-black/70">
                             {activeTab === "books"
                                 ? "Registrá, editá y eliminá libros."
                                 : `Administrá los registros de ${currentTab.label.toLowerCase()}.`}

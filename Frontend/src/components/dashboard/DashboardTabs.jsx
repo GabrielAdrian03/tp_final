@@ -22,7 +22,7 @@ export default function DashboardTabs({ activeTab, onTabChange }) {
                 <h2 className="font-bold text-slate-800">
                     Gestión de biblioteca
                 </h2>
-                <p className="mt-1 text-sm text-slate-500">
+                <p className="mt-1 text-sm text-black/70">
                     Seleccioná una sección para administrar sus registros.
                 </p>
             </div>

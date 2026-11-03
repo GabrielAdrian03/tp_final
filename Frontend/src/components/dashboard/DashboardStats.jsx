@@ -1,4 +1,3 @@
-
 import {
     BookOpen,
     Users,
@@ -44,7 +43,7 @@ export default function DashboardStats({
             {stats.map(({ label, value, icon: Icon, color }) => (
                 <div
                     key={label}
-                    className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:shadow-md"
+                    className="rounded-2xl border border-slate-200 bg-red-100 p-5 shadow-sm transition hover:shadow-md"
                 >
                     <div className="flex items-center justify-between gap-2">
                         <div className={`rounded-xl p-3 ${color}`}>

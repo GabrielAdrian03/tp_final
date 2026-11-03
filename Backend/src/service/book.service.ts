@@ -6,7 +6,8 @@ import { Sage } from "../entities/sage.entity";
 import { Shelf } from "../entities/shelf.entity";
 
 type RelationInput = number | { id: number } | null | undefined;
-
+//sirve para crear un libro, obtener todos los libros con filtros,
+//  obtener un libro por id, actualizar un libro y eliminar un libro
 interface BookCreateInput {
     title: string;
     yearPublication: number;

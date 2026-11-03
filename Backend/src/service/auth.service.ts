@@ -28,7 +28,6 @@ export class AuthService {
         return await this.userRepository.save(newUser);
     }
 
-    // 🛠️ CORREGIDO: Cambiado 'User' por 'user' en minúscula para cumplir con los estándares
     async loginUser(email: string, password: string): Promise<{ user: any, token: string }> {
         // Busca al usuario por su Email
         const user = await this.userRepository.findOneBy({ email });
@@ -42,16 +41,16 @@ export class AuthService {
             throw new Error("La contraseña no concuerda");
         }
 
-        // 🛠️ CORREGIDO: Se cambió 'userFound' por 'user', que es el nombre real de tu constante arriba
+        // Genera el token JWT
         const token = jwt.sign(
             { userId: user.id, email: user.email },
-            process.env.JWT_SECRET || process.env.SECRET_KEY || "token_de_autenticacion", // Alineado 100% con tu middleware
+            process.env.JWT_SECRET || process.env.SECRET_KEY || "token_de_autenticacion",
             { expiresIn: "24h" }
         );
 
         const { password: _, ...userResponse } = user;
         
-        // 🛠️ CORREGIDO: Retornamos 'user' en minúscula para coincidir con la Promesa
+        //regresa el usuario y el token
         return { user: userResponse, token };
     }
 }

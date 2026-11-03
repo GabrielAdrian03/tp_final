@@ -2,7 +2,7 @@
 import { Request, Response, NextFunction } from "express";
 import { Logger } from "../utils/logger";
 import { AutenticateRequest } from "./auth.middleware";
-
+// Middleware para registrar las solicitudes HTTP y sus respuestas
 export const requestLogger = (
     req: Request,
     res: Response,

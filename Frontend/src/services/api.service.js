@@ -13,7 +13,8 @@ export const LogsService = {
         api.get("/logs", { params }).then(res => res.data)
 };
 
-// Interceptor: Inyecta automáticamente el token de LocalStorage en cada petición
+// Interceptor: Inyecta automáticamente el token de LocalStorage 
+// en cada petición
 api.interceptors.request.use((config) => {
     const token = localStorage.getItem(STORAGE_KEYS.ADMIN_TOKEN);
     if (token) {
@@ -22,7 +23,8 @@ api.interceptors.request.use((config) => {
     return config;
 });
 
-// Interceptor: Manejo de estados de error globales (Token Expirado / Inválido -> 403)
+// Interceptor: Manejo de estados de error globales 
+// (Token Expirado / Inválido -> 403)
 api.interceptors.response.use(
     (response) => response,
     (error) => {
@@ -36,11 +38,13 @@ api.interceptors.response.use(
 
 // Capa expositora de servicios (Contratos limpios)
 export const CatalogService = {
+    //
     getBooks: (params) => api.get("/books", { params }).then(res => res.data),
     createBook: (data) => api.post("/books", data).then(res => res.data),
     updateBook: (id, data) => api.put(`/books/${id}`, data).then(res => res.data),
     deleteBook: (id) => api.delete(`/books/${id}`).then(res => res.data),
-    
+
+    //servicio para obtener los items de autores, generos, sagas y estantes
     getItems: (entity) => api.get(`/${entity}`).then(res => res.data),
     createItem: (entity, name) => api.post(`/${entity}`, { name }).then(res => res.data),
     updateItem: (entity, id, name) => api.put(`/${entity}/${id}`, { name }).then(res => res.data),

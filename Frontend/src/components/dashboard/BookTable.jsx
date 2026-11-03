@@ -9,7 +9,7 @@ export default function BookTable({ books, onEdit, onDelete }) {
                     <h3 className="text-xl font-bold text-slate-900">
                         Libros en el inventario
                     </h3>
-                    <p className="mt-1 text-sm text-slate-500">
+                    <p className="mt-1 text-sm text-black/70">
                         {books.length} libros registrados.
                     </p>
                 </div>
@@ -47,7 +47,7 @@ export default function BookTable({ books, onEdit, onDelete }) {
                                     key={book.id}
                                     className="transition hover:bg-slate-50"
                                 >
-                                    <td className="px-5 py-4 font-semibold text-slate-800">
+                                    <td className="px-5 py-4 font-semibold text-white">
                                         {book.title}
                                     </td>
 
