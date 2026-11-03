@@ -19,5 +19,5 @@ export const AppDataSource = new DataSource({
   database: process.env.DB_NAME || process.env.DB_DATABASE || "biblioteca",
   synchronize: true,
   logging: false,
-  entities: [User, Book, Author, Genere, Sage, Shelf, Log],
+  entities: [User, Log, Book, Author, Genere, Sage, Shelf],
 });

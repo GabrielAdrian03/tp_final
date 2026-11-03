@@ -13,6 +13,7 @@ const genere_entity_1 = require("../entities/genere.entity");
 const sage_entity_1 = require("../entities/sage.entity");
 const shelf_entity_1 = require("../entities/shelf.entity");
 const user_entity_1 = require("../entities/user.entity");
+const log_entity_1 = require("../entities/log.entity");
 dotenv_1.default.config();
 exports.AppDataSource = new typeorm_1.DataSource({
     type: "mysql",
@@ -23,5 +24,5 @@ exports.AppDataSource = new typeorm_1.DataSource({
     database: process.env.DB_NAME || process.env.DB_DATABASE || "biblioteca",
     synchronize: true,
     logging: false,
-    entities: [user_entity_1.User, book_entity_1.Book, author_entity_1.Author, genere_entity_1.Genere, sage_entity_1.Sage, shelf_entity_1.Shelf],
+    entities: [user_entity_1.User, log_entity_1.Log, book_entity_1.Book, author_entity_1.Author, genere_entity_1.Genere, sage_entity_1.Sage, shelf_entity_1.Shelf],
 });

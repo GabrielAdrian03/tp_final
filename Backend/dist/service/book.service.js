@@ -48,19 +48,19 @@ class BookService {
         return await this.bookRepository.save(newBook);
     }
     //cRud obtener todos los libros con caracteristicas
-    async getFilteredBooks(generId, authorId, year) {
+    async getFilteredBooks(genreId, authorId, year) {
         const query = this.bookRepository.createQueryBuilder("book")
             .leftJoinAndSelect("book.author", "author")
             .leftJoinAndSelect("book.genere", "genere")
             .leftJoinAndSelect("book.shelf", "shelf")
             .leftJoinAndSelect("book.sage", "sage");
-        if (generId) {
-            query.andWhere("genere.id = :generId", { generId });
+        if (genreId !== undefined) {
+            query.andWhere("genere.id = :genreId", { genreId });
         }
-        if (authorId) {
+        if (authorId !== undefined) {
             query.andWhere("author.id = :authorId", { authorId });
         }
-        if (year) {
+        if (year !== undefined) {
             query.andWhere("book.yearPublication = :year", { year });
         }
         return await query.getMany();

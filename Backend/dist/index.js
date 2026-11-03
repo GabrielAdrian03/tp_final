@@ -13,21 +13,31 @@ const error_middleware_1 = require("./middleware/error.middleware");
 const auth_routes_1 = __importDefault(require("./routes/auth.routes"));
 const book_routes_1 = __importDefault(require("./routes/book.routes"));
 const crud_routes_1 = __importDefault(require("./routes/crud.routes"));
+const log_routes_1 = __importDefault(require("./routes/log.routes"));
 const app = (0, express_1.default)();
-const PORT = process.env.PORT || 4000;
-//cors para la seguridad
-app.use((0, cors_1.default)());
+const PORT = process.env.PORT || 8080;
+// Configuración de CORS estricta y segura para tu Frontend en Vite
+app.use((0, cors_1.default)({
+    origin: "http://localhost:5173",
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"]
+}));
+// Permite a Express leer los cuerpos (body) de los POST/PUT en formato JSON
 app.use(express_1.default.json());
+// Logger de peticiones
 app.use(logger_middleware_1.requestLogger);
-//ruta de autenticacion
 app.use("/api/auth", auth_routes_1.default);
 app.use("/api/books", book_routes_1.default);
 app.use("/api", crud_routes_1.default);
+app.use("/api/logs", log_routes_1.default);
+app.get("/api/test", (req, res) => {
+    res.json({ message: "API funcionando correctamente." });
+});
 app.use(error_middleware_1.errorHandler);
-//conexion a la BD
 data_source_1.AppDataSource.initialize()
     .then(async () => {
-    console.log("conectado a la BD. Puerto:", PORT);
+    console.log("Conectado a la BD de forma exitosa.");
     const userRepository = data_source_1.AppDataSource.getRepository(user_entity_1.User);
     const adminCount = await userRepository.count();
     if (adminCount === 0) {
@@ -41,7 +51,7 @@ data_source_1.AppDataSource.initialize()
         console.log("Se creó el usuario admin de prueba");
     }
     app.listen(PORT, () => {
-        console.log(`Conectese en http://localhost:${PORT}`);
+        console.log(`Servidor corriendo en: http://localhost:${PORT}`);
     });
 })
-    .catch((error) => console.error("Error: ", error));
+    .catch((error) => console.error("Error al inicializar Data Source: ", error));

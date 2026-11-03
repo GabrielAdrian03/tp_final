@@ -6,7 +6,7 @@ const auth_middleware_1 = require("../middleware/auth.middleware");
 const router = (0, express_1.Router)();
 const bookController = new book_controller_1.BookController();
 //vista publicas solo get
-router.get("/:id", bookController.getOne);
+router.get("/", bookController.getAll);
 router.get("/:id", bookController.getOne);
 //rutas privadas que se ven si se valida el token
 router.post("/", auth_middleware_1.authenticateJWT, bookController.create);

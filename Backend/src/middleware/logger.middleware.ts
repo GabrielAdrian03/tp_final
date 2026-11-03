@@ -8,7 +8,9 @@ export const requestLogger = (
     res: Response,
     next: NextFunction
 ) => {
+    // Registrar la hora de inicio de la solicitud
     const start = Date.now();
+    // Registrar un evento cuando la respuesta se envía
     res.on("finish", () => {
         const duration = Date.now() - start;
         const { method, originalUrl } = req;

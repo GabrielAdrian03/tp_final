@@ -16,21 +16,9 @@ import logRoutes from "./routes/log.routes";
 const app = express();
 const PORT = process.env.PORT || 8080;
 
-// Rutas del sistema
-app.use("/api/auth", authRoutes);
-app.use("/api/books", bookRoutes);
-app.use("/api", crudRoutes);
-app.use("/api/logs", logRoutes);
-
-// Manejador de errores
-app.use(errorHandler);
-// ==========================================
-// 1. MIDDLEWARES GLOBALES (Siempre van PRIMERO)
-// ==========================================
-
 // Configuración de CORS estricta y segura para tu Frontend en Vite
 app.use(cors({
-  origin: "http://localhost:5173", 
+  origin: "http://localhost:5173",
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"]
@@ -42,21 +30,17 @@ app.use(express.json());
 // Logger de peticiones
 app.use(requestLogger);
 
-// ==========================================
-// 2. RUTAS DEL SISTEMA (Van DESPUÉS de los middlewares)
-// ==========================================
 app.use("/api/auth", authRoutes);
 app.use("/api/books", bookRoutes);
 app.use("/api", crudRoutes);
+app.use("/api/logs", logRoutes);
 
-// ==========================================
-// 3. MANEJADOR DE ERRORES (Siempre va al FINAL de las rutas)
-// ==========================================
+app.get("/api/test", (req, res) => {
+    res.json({ message: "API funcionando correctamente." });
+});
+
 app.use(errorHandler);
 
-// ==========================================
-// 4. CONEXIÓN A LA BASE DE DATOS Y ARRANQUE
-// ==========================================
 AppDataSource.initialize()
     .then(async () => {
         console.log("Conectado a la BD de forma exitosa.");
